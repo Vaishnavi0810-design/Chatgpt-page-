@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="My AI - Your personal AI chat interface">
+    <title>My AI | Smart Chat Assistant</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="brand">
+                <div class="brand-icon">✦</div>
+                <span>My AI</span>
+                <button class="icon-button close-sidebar" id="closeSidebar"
+                    aria-label="Close sidebar">×</button>
+            </div>
+
+            <button class="new-chat-button" id="newChat">
+                <span>＋</span> New Chat
+            </button>
+
+            <p class="section-label">YOUR CONVERSATIONS</p>
+            <div class="chat-history" id="chatHistory">
+                <button class="history-item active">
+                    <span>✧</span>
+                    <span class="history-title">Welcome to My AI</span>
+                </button>
+            </div>
+
+            <div class="sidebar-bottom">
+                <button class="sidebar-link" id="themeToggle">
+                    <span>◐</span> Appearance
+                    <span class="theme-label" id="themeLabel">Dark</span>
+                </button>
+
+                <button class="sidebar-link" id="clearHistory">
+                    <span>⌫</span> Clear conversations
+                </button>
+
+                <div class="profile">
+                    <div class="profile-avatar">S</div>
+                    <div class="profile-info">
+                        <strong>Student</strong>
+                        <small>My AI workspace</small>
+                    </div>
+                    <span class="profile-menu">•••</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main content -->
+        <main class="main-content">
+
+            <header class="topbar">
+                <button class="icon-button menu-button" id="openSidebar"
+                    aria-label="Open sidebar">☰</button>
+
+                <div class="page-title">
+                    My AI <span class="dropdown-arrow">⌄</span>
+                </div>
+
+                <div class="assistant-status">
+                    <span class="status-dot"></span>
+                    <span>AI Assistant</span>
+                </div>
+            </header>
+
+            <!-- Chat messages and welcome screen -->
+            <section class="chat-area" id="chatArea">
+
+                <div class="welcome-screen" id="welcomeScreen">
+                    <div class="welcome-icon">✦</div>
+
+                    <p class="eyebrow">YOUR PERSONAL AI ASSISTANT</p>
+
+                    <h1>What can I help you<br>
+                        <span>with today?</span>
+                    </h1>
+
+                    <p class="welcome-description">
+                        Ask questions, explore ideas, learn something new,
+                        or bring your next project to life.
+                    </p>
+
+                    <div class="suggestion-grid">
+                        <button class="suggestion-card"
+                            data-prompt="Explain HTML in simple words">
+                            <span class="card-icon purple">⌘</span>
+                            <span class="card-text">
+                                <strong>Learn something</strong>
+                                <small>Explain HTML in simple words</small>
+                            </span>
+                            <span class="card-arrow">↗</span>
+                        </button>
+
+                        <button class="suggestion-card"
+                            data-prompt="Suggest creative CSS project ideas">
+                            <span class="card-icon orange">✳</span>
+                            <span class="card-text">
+                                <strong>Get creative</strong>
+                                <small>Discover new project ideas</small>
+                            </span>
+                            <span class="card-arrow">↗</span>
+                        </button>
+
+                        <button class="suggestion-card"
+                            data-prompt="Help me debug my JavaScript code">
+                            <span class="card-icon green">{ }</span>
+                            <span class="card-text">
+                                <strong>Code with me</strong>
+                                <small>Fix errors in your code</small>
+                            </span>
+                            <span class="card-arrow">↗</span>
+                        </button>
+
+                        <button class="suggestion-card"
+                            data-prompt="Help me make concise study notes">
+                            <span class="card-icon blue">▤</span>
+                            <span class="card-text">
+                                <strong>Study smarter</strong>
+                                <small>Create useful study notes</small>
+                            </span>
+                            <span class="card-arrow">↗</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="messages" id="messages"
+                    aria-live="polite"></div>
+
+            </section>
+
+            <!-- Message composer -->
+            <footer class="composer-area">
+                <form class="composer" id="chatForm">
+                    <textarea
+                        id="messageInput"
+                        rows="1"
+                        placeholder="Message My AI..."
+                        aria-label="Type your message"
+                    ></textarea>
+
+                    <div class="composer-bottom">
+                        <span class="composer-hint">
+                            <span class="hint-sparkle">✦</span>
+                            Ask anything
+                        </span>
+
+                        <div class="composer-actions">
+                            <span class="keyboard-hint">Enter ↵</span>
+                            <button class="send-button" id="sendButton"
+                                type="submit" aria-label="Send message">
+                                ↑
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <p class="disclaimer">
+                    My AI is a demo assistant and may make mistakes.
+                    Verify important information.
+                </p>
+            </footer>
+
+        </main>
+    </div>
+
+    <div class="toast" id="toast" role="status"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
