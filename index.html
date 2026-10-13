@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My AI | Creative Corner</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap');
+
+:root {
+  --pink: #f43f8e;
+  --dark-pink: #d91d70;
+  --purple: #7551dc;
+  --lavender: #c6b4ff;
+  --yellow: #ffdf70;
+  --text: #302238;
+  --bg: #fff5f9;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 90% 10%, #ffd5e7, transparent 25%),
+    radial-gradient(circle at 10% 90%, #e6dfff, transparent 28%),
+    var(--bg);
+}
+
+button, textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+  width: 255px;
+  flex-shrink: 0;
+  padding: 25px 18px;
+  background: #ffdfeb;
+  border-right: 2px solid #f2b7d0;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 25px;
+  font-weight: 800;
+  padding-bottom: 20px;
+  border-bottom: 2px dashed #e9a6c6;
+}
+
+.brand-icon {
+  width: 45px;
+  height: 45px;
+  display: grid;
+  place-items: center;
+  background: var(--pink);
+  color: white;
+  border: 2px solid var(--text);
+  border-radius: 15px;
+  box-shadow: 4px 4px 0 var(--text);
+  transform: rotate(-6deg);
+}
+
+.brand span {
+  color: var(--dark-pink);
+}
+
+.new-chat {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid var(--text);
+  border-radius: 15px;
+  background: var(--pink);
+  color: white;
+  font-weight: 800;
+  box-shadow: 4px 4px 0 var(--text);
+  transition: .2s;
+}
+
+.new-chat:hover {
+  background: var(--dark-pink);
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--text);
+}
+
+.section-label {
+  margin-bottom: 12px;
+  color: #98617d;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.history-item,
+.sidebar-link {
+  padding: 13px;
+  margin-bottom: 7px;
+  border: 2px solid transparent;
+  border-radius: 13px;
+  color: #624a65;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.history-item:hover,
+.history-item.active,
+.sidebar-link:hover {
+  background: white;
+  border-color: #e6a1c1;
+  color: var(--dark-pink);
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+  padding-top: 17px;
+  border-top: 2px dashed #e9a6c6;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  background: #fff5fa;
+  border: 2px solid #e9a6c6;
+  border-radius: 15px;
+  font-size: 12px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--text);
+  border-radius: 50%;
+  background: var(--yellow);
+  font-weight: 800;
+}
+
+/* MAIN AREA */
+
+.main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 22px 30px;
+  background: rgba(255,255,255,.9);
+  border-bottom: 2px solid #f3d0e0;
+  font-weight: 800;
+}
+
+.status {
+  padding: 9px 13px;
+  border: 2px solid #b9e7c2;
+  border-radius: 30px;
+  background: #e9ffed;
+  color: #286c3c;
+  font-size: 11px;
+}
+
+/* WELCOME */
+
+.content {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 45px 30px 25px;
+  flex: 1;
+}
+
+.welcome {
+  position: relative;
+  max-width: 790px;
+  margin: 20px auto 40px;
+  text-align: center;
+  animation: appear .5s ease;
+}
+
+.welcome-icon {
+  width: 85px;
+  height: 85px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 25px;
+  border: 3px solid var(--text);
+  border-radius: 27px;
+  background: var(--pink);
+  color: white;
+  font-size: 40px;
+  box-shadow: 6px 6px 0 var(--text);
+  transform: rotate(-6deg);
+}
+
+.eyebrow {
+  display: inline-block;
+  padding: 9px 15px;
+  margin-bottom: 18px;
+  border: 2px solid #eaa4c5;
+  border-radius: 30px;
+  background: #ffe0ed;
+  color: var(--dark-pink);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+h1 {
+  margin-bottom: 18px;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(38px, 5vw, 60px);
+  line-height: 1.15;
+}
+
+h1 span {
+  color: var(--dark-pink);
+  text-decoration: underline;
+  text-decoration-color: var(--yellow);
+  text-decoration-thickness: 7px;
+  text-underline-offset: 5px;
+}
+
+.description {
+  max-width: 470px;
+  margin: auto;
+  color: #78627f;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* SUGGESTION CARDS */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  max-width: 780px;
+  margin: 38px auto 0;
+}
+
+.card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  min-height: 130px;
+  padding: 20px;
+  position: relative;
+  text-align: left;
+  border: 2px solid var(--text);
+  border-radius: 21px;
+  background: white;
+  box-shadow: 5px 5px 0 var(--text);
+  transition: .2s;
+}
+
+.card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 8px 8px 0 var(--text);
+}
+
+.card-icon {
+  width: 47px;
+  height: 47px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--text);
+  border-radius: 15px;
+  font-size: 22px;
+}
+
+.purple { background: #c6b4ff; }
+.orange { background: #ffbd9e; }
+.green { background: #b8edc4; }
+.blue { background: #b5d8ff; }
+
+.card strong {
+  display: block;
+  margin: 4px 0 8px;
+  font-size: 14px;
+}
+
+.card p {
+  color: #786b80;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.arrow {
+  position: absolute;
+  right: 14px;
+  bottom: 12px;
+  color: var(--dark-pink);
+  font-size: 18px;
+}
+
+/* CHAT MESSAGES */
+
+.messages {
+  max-width: 790px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.message {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  animation: appear .3s ease;
+}
+
+.message.user {
+  flex-direction: row-reverse;
+}
+
+.message-avatar {
+  width: 39px;
+  height: 39px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--text);
+  border-radius: 13px;
+  background: var(--lavender);
+  box-shadow: 2px 2px 0 var(--text);
+}
+
+.message.user .message-avatar {
+  background: var(--yellow);
+}
+
+.message-body {
+  max-width: 82%;
+  padding: 16px 19px;
+  border: 2px solid #e6c8dd;
+  border-radius: 5px 20px 20px;
+  background: white;
+  box-shadow: 3px 3px 0 #ead8e6;
+  overflow-wrap: anywhere;
+}
+
+.message.user .message-body {
+  border-color: var(--dark-pink);
+  border-radius: 20px 5px 20px 20px;
+  background: #ffe0ed;
+  box-shadow: 3px 3px 0 #eaa0c1;
+}
+
+.message-name {
+  margin-bottom: 8px;
+  color: var(--purple);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.message.user .message-name {
+  color: var(--dark-pink);
+}
+
+.message-text {
+  font-size: 14px;
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+
+/* MESSAGE INPUT */
+
+.composer-area {
+  position: sticky;
+  bottom: 0;
+  padding: 20px 30px 17px;
+  background: linear-gradient(to bottom, transparent, #fff5f9 18%);
+}
+
+.composer {
+  max-width: 790px;
+  margin: auto;
+  padding: 15px 17px 12px;
+  border: 2px solid var(--text);
+  border-radius: 23px;
+  background: white;
+  box-shadow: 5px 5px 0 var(--text);
+}
+
+.composer:focus-within {
+  border-color: var(--dark-pink);
+  box-shadow: 5px 5px 0 var(--pink);
+}
+
+textarea {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  max-height: 180px;
+  padding: 8px 3px;
+  resize: vertical;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 14px;
+}
+
+textarea::placeholder {
+  color: #a18ba5;
+}
+
+.composer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 11px;
+  margin-top: 8px;
+  border-top: 1px dashed #ead0e1;
+}
+
+.hint {
+  color: #8e7894;
+  font-size: 11px;
+}
+
+.send {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--text);
+  border-radius: 14px;
+  background: var(--pink);
+  color: white;
+  font-size: 22px;
+  font-weight: 800;
+  box-shadow: 3px 3px 0 var(--text);
+  transition: .2s;
+}
+
+.send:hover {
+  background: var(--dark-pink);
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--text);
+}
+
+.disclaimer {
+  margin: 15px auto 0;
+  color: #927f97;
+  text-align: center;
+  font-size: 10px;
+}
+
+.toast {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  padding: 13px 20px;
+  border: 2px solid var(--text);
+  border-radius: 14px;
+  background: var(--yellow);
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 4px 4px 0 var(--text);
+  opacity: 0;
+  transition: .25s;
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 800px) {
+  .sidebar { width: 210px; }
+  .content { padding: 30px 18px; }
+  .topbar { padding: 18px; }
+}
+
+@media (max-width: 600px) {
+  .sidebar { display: none; }
+  .topbar { padding: 15px; }
+  .content { padding: 30px 14px; }
+  .welcome { margin-top: 10px; }
+  .welcome-icon { width: 70px; height: 70px; font-size: 32px; }
+  h1 { font-size: 36px; }
+  .description { font-size: 13px; }
+  .cards { gap: 12px; margin-top: 28px; }
+  .card { min-height: 150px; padding: 13px; flex-direction: column; gap: 9px; }
+  .card-icon { width: 39px; height: 39px; font-size: 19px; }
+  .card strong { font-size: 12px; }
+  .card p { font-size: 11px; }
+  .composer-area { padding: 14px 12px 10px; }
+  .composer { padding: 12px; }
+  .status { font-size: 10px; }
+}
+
+@media (max-width: 350px) {
+  .cards { grid-template-columns: 1fr; }
+  .card { min-height: 105px; flex-direction: row; }
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">✿</div>
+      <div>my<span>AI</span></div>
+    </div>
+
+    <button class="new-chat" id="newChat">＋ New chat</button>
+
+    <section>
+      <p class="section-label">Recent chats</p>
+      <div id="history">
+        <div class="history-item active">✦ Your creative corner</div>
+      </div>
+    </section>
+
+    <div class="sidebar-bottom">
+      <div class="sidebar-link" id="clearChat">⌫ Clear conversation</div>
+      <div class="sidebar-link" id="themeToggle">☼ Change theme</div>
+      <div class="profile">
+        <div class="avatar">V</div>
+        <div><strong>Your Profile</strong><br>Creative mode ✨</div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>My AI <span style="color:#d91d70">⌄</span></div>
+      <div class="status">● Ready to help ✦</div>
+    </header>
+
+    <section class="content">
+      <div class="welcome" id="welcome">
+        <div class="welcome-icon">✿</div>
+        <div class="eyebrow">YOUR LITTLE CORNER OF THE INTERNET</div>
+        <h1>Big ideas, <span>pretty</span> things.</h1>
+        <p class="description">
+          A little help, a little inspiration, and a whole lot of possibilities.
+          What shall we create today?
+        </p>
+
+        <div class="cards">
+          <button class="card" data-prompt="Help me brainstorm a creative project.">
+            <span class="card-icon purple">✧</span>
+            <span><strong>Brainstorm ideas</strong><p>Turn your random thoughts into something lovely.</p></span>
+            <span class="arrow">↗</span>
+          </button>
+
+          <button class="card" data-prompt="Help me write something creative and engaging.">
+            <span class="card-icon orange">✎</span>
+            <span><strong>Write something</strong><p>Captions, stories, messages, and more.</p></span>
+            <span class="arrow">↗</span>
+          </button>
+
+          <button class="card" data-prompt="Explain a difficult topic to me in simple steps.">
+            <span class="card-icon green">✿</span>
+            <span><strong>Learn something</strong><p>Make complicated things easier to understand.</p></span>
+            <span class="arrow">↗</span>
+          </button>
+
+          <button class="card" data-prompt="Help me organise my week and plan my tasks.">
+            <span class="card-icon blue">♡</span>
+            <span><strong>Plan my day</strong><p>Organise your tasks without the stress.</p></span>
+            <span class="arrow">↗</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="messages" id="messages"></div>
+    </section>
+
+    <section class="composer-area">
+      <form class="composer" id="chatForm">
+        <textarea id="prompt" rows="2" placeholder="Ask me anything... ✨"></textarea>
+        <div class="composer-bottom">
+          <span class="hint">✦ Your ideas are welcome here</span>
+          <button class="send" type="submit" aria-label="Send">↑</button>
+        </div>
+      </form>
+      <p class="disclaimer">This is a front-end demo and isn't connected to an AI service yet.</p>
+    </section>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const promptBox = document.getElementById('prompt');
+const messages = document.getElementById('messages');
+const welcome = document.getElementById('welcome');
+const history = document.getElementById('history');
+const toast = document.getElementById('toast');
+
+function notify(text) {
+  toast.textContent = text;
+  toast.classList.add('show');
+  clearTimeout(window.toastTimer);
+  window.toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+}
+
+function addMessage(text, sender) {
+  const row = document.createElement('div');
+  row.className = 'message ' + sender;
+
+  const avatar = document.createElement('div');
+  avatar.className = 'message-avatar';
+  avatar.textContent = sender === 'user' ? 'V' : '✿';
+
+  const body = document.createElement('div');
+  body.className = 'message-body';
+
+  const name = document.createElement('div');
+  name.className = 'message-name';
+  name.textContent = sender === 'user' ? 'You' : 'My AI';
+
+  const content = document.createElement('div');
+  content.className = 'message-text';
+  content.textContent = text;
+
+  body.append(name, content);
+  row.append(avatar, body);
+  messages.appendChild(row);
+  row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function sendMessage(text) {
+  const value = (text || promptBox.value).trim();
+  if (!value) return;
+
+  welcome.hidden = true;
+  addMessage(value, 'user');
+  promptBox.value = '';
+
+  const item = document.createElement('div');
+  item.className = 'history-item active';
+  item.textContent = '✦ ' + value.slice(0, 28);
+  history.prepend(item);
+
+  addMessage(
+    'This is a front-end demo, so it is not connected to an AI model yet. To get real AI answers, you will need to connect a backend or AI API.',
+    'assistant'
+  );
+}
+
+document.getElementById('chatForm').addEventListener('submit', event => {
+  event.preventDefault();
+  sendMessage();
+});
+
+promptBox.addEventListener('keydown', event => {
+  if (event.key === 'Enter' && !event.shiftKey) {
+    event.preventDefault();
+    sendMessage();
+  }
+});
+
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('click', () => sendMessage(card.dataset.prompt));
+});
+
+document.getElementById('newChat').addEventListener('click', () => {
+  messages.replaceChildren();
+  welcome.hidden = false;
+  promptBox.value = '';
+  history.replaceChildren();
+
+  const item = document.createElement('div');
+  item.className = 'history-item active';
+  item.textContent = '✦ Your creative corner';
+  history.appendChild(item);
+
+  promptBox.focus();
+});
+
+document.getElementById('clearChat').addEventListener('click', () => {
+  messages.replaceChildren();
+  welcome.hidden = false;
+  notify('Conversation cleared ✨');
+});
+
+document.getElementById('themeToggle').addEventListener('click', () => {
+  document.body.classList.toggle('alternate');
+  document.body.style.background = document.body.classList.contains('alternate')
+    ? 'linear-gradient(135deg,#f0e6ff,#ffe0ed,#fff0bd)'
+    : '';
+  notify('Theme changed 🎀');
+});
+</script>
+</body>
+</html>
